@@ -1,6 +1,8 @@
 
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
@@ -10,12 +12,17 @@
 
 #include <WiFiClient.h>
 
+#define ONE_WIRE_BUS D5
+
 ESP8266WiFiMulti WiFiMulti;
 LiquidCrystal_I2C lcd(0x27,16,2);
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
 
 void setup() {
   lcd.init();
   lcd.backlight();
+  sensors.begin();
   Serial.begin(115200);
   // Serial.setDebugOutput(true);
 
@@ -45,7 +52,8 @@ void loop() {
     WiFiClient client;
 
     HTTPClient http;
-    http.begin(client, "http://api.iot.hva-robots.nl/weather/Amsterdam");//
+    http.begin(client, "https://api.iot.hva-robots.nl/weather/Amsterdam/compact");//
+    Serial.println(http.getString());
     int httpCode = http.GET();//
 
     if (httpCode == HTTP_CODE_OK) { // HTTP_CODE_OK == 200
@@ -54,7 +62,7 @@ void loop() {
 
     deserializeJson(jsonBuffer, payload);
 
-    outdoorTemp = jsonBuffer["temp_C"];
+    outdoorTemp = jsonBuffer["FeelsLikeC"];
     //Serial.print("Outdoor temp in Amsterdam: ");
    //Serial.println(outdoorTemp);
    
@@ -63,16 +71,19 @@ void loop() {
     }
 
     Serial.print("[HTTP] begin...\n");
-    int sensorValue = analogRead(A0);
-    lcd.setCursor(12,0);
+    sensors.requestTemperatures(); 
+    double sensorValue = sensors.getTempCByIndex(0);
+    lcd.setCursor(8,0);
     lcd.print(sensorValue);
     lcd.setCursor(0,0);
-    lcd.print("IndoorTemp:");
-    lcd.setCursor(12,1);
+    lcd.print("Indoor:");
+    lcd.setCursor(13,0);
+    lcd.print("'C");
+    lcd.setCursor(9,1);
     lcd.print(outdoorTemp);
     lcd.setCursor(0,1);
     lcd.print("outdoor:");
-
+   
     
     String url = String("http://0d4f-145-109-154-166.ngrok.io/site/insert_db.php/?temperature=")+sensorValue;
     Serial.println(url);
