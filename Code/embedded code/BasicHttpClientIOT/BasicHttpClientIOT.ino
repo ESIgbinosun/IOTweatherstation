@@ -10,14 +10,20 @@
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>
 
+#include <ESP8266HTTPClient.h>
+
+#include <WiFiClientSecureBearSSL.h>
 #include <WiFiClient.h>
 
 #define ONE_WIRE_BUS D5
 
 ESP8266WiFiMulti WiFiMulti;
-LiquidCrystal_I2C lcd(0x27,16,2);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
+//const uint8_t fingerprint[20] = {0xb4, 0x22, 0x73, 0x81, 0xc1, 0x21, 0x6b, 0x72, 0x5c, 0xcc, 0xd9, 0xc1, 0x2d, 0xfd, 0x9b, 0x90, 0x0b, 0xf8, 0xc7, 0xf8};
+signed int outdoorTemp;
+
 
 void setup() {
   lcd.init();
@@ -43,56 +49,65 @@ void setup() {
 }
 
 void loop() {
-    int outdoorTemp;
-    WiFiClient client;//
-    DynamicJsonDocument jsonBuffer(1024);//
+
+
+  DynamicJsonDocument jsonBuffer(1024);//
   // wait for WiFi connection
   if ((WiFiMulti.run() == WL_CONNECTED)) {
+    //std::unique_ptr<BearSSL::WiFiClientSecure>client(new BearSSL::WiFiClientSecure);
+    //client->setFingerprint(fingerprint);
+
+    //HTTPClient https;
 
     WiFiClient client;
-
     HTTPClient http;
-    http.begin(client, "https://api.iot.hva-robots.nl/weather/Amsterdam/compact");//
+    http.begin(client, "http://api.iot.hva-robots.nl/weather/Amsterdam/compact");//
     Serial.println(http.getString());
     int httpCode = http.GET();//
-
+    Serial.println(httpCode);
     if (httpCode == HTTP_CODE_OK) { // HTTP_CODE_OK == 200
-    String payload = http.getString();//
-    ///Serial.println(payload);
+      String payload = http.getString();//
+      Serial.println(payload);
 
-    deserializeJson(jsonBuffer, payload);
-
-    outdoorTemp = jsonBuffer["FeelsLikeC"];
-    //Serial.print("Outdoor temp in Amsterdam: ");
-   //Serial.println(outdoorTemp);
+      deserializeJson(jsonBuffer, payload);
    
+
+      outdoorTemp = jsonBuffer["data"]["temp_C"].as<signed int>();
+      //Serial.print("Outdoor temp in Amsterdam: ");
+      Serial.println(outdoorTemp);
+      http.end();
+
     } else {
-    Serial.println("Unable to connect :(");
+      Serial.println("Unable to connect :( to api mats");
     }
 
+
     Serial.print("[HTTP] begin...\n");
-    sensors.requestTemperatures(); 
+    sensors.requestTemperatures();
     double sensorValue = sensors.getTempCByIndex(0);
-    lcd.setCursor(8,0);
+    lcd.setCursor(8, 0);
     lcd.print(sensorValue);
-    lcd.setCursor(0,0);
+    lcd.setCursor(0, 0);
     lcd.print("Indoor:");
-    lcd.setCursor(13,0);
+    lcd.setCursor(13, 0);
     lcd.print("'C");
-    lcd.setCursor(9,1);
+    lcd.setCursor(9, 1);
     lcd.print(outdoorTemp);
-    lcd.setCursor(0,1);
+    lcd.setCursor(0, 1);
     lcd.print("outdoor:");
-   
-    
-    String url = String("http://0d4f-145-109-154-166.ngrok.io/site/insert_db.php/?temperature=")+sensorValue;
+    lcd.setCursor(11, 1);
+    lcd.print("'C");
+
+
+    String url = String("http://2ae3-145-109-135-199.ngrok.io/site/insert_db.php/?temperature=") + sensorValue;
     Serial.println(url);
-    if (http.begin(client,url)) {  // HTTP
+    HTTPClient client2;
+    if (client2.begin(client, url)) { // HTTP
 
 
       Serial.print("[HTTP] GET...\n");
       // start connection and send HTTP header
-      int httpCode = http.GET();
+      int httpCode = client2.GET();
 
       // httpCode will be negative on error
       if (httpCode > 0) {
@@ -101,14 +116,14 @@ void loop() {
 
         // file found at server
         if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
-          String payload = http.getString();
+          String payload = client2.getString();
           Serial.println(payload);
         }
       } else {
-        Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+        Serial.printf("[HTTP] GET... failed, error: %s\n", client2.errorToString(httpCode).c_str());
       }
 
-      http.end();
+      client2.end();
     } else {
       Serial.printf("[HTTP} Unable to connect\n");
     }
