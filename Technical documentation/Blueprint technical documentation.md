@@ -1,8 +1,8 @@
-#Blueprint technical Documentation
+# Blueprint technical Documentation
 
-##Wiring diagram 
+## Wiring diagram 
 
-##Bill of materials
+## Bill of materials
 
 
 |#| part number  | manufacturer  | name    |description                        | quantity  | cost   | url                                                                                                                                                                                                   |
