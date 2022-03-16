@@ -41,13 +41,29 @@
                 text-align: center;
             }    
         </style>
+        <style>
+            #content {
+                position: relative;
+            }
+            #content img {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+            }
+        </style>
+        
+        <div id="content">
+            <img src="image/cloudy-day-2.svg" class="ribbon" width="110" height="110"/>
+        </div>
         <h1>Weather Mill Station</h1>
         <p>Indoor Temperature Chart</p>
         
         
+        
         <div class="chartBox">
             <canvas id="myChart"></canvas>
-        </div>"
+        </div>
+        <p>Outdoor Temperature Chart</p>
         
         <script>
         const ctx = document.getElementById('myChart').getContext('2d');
