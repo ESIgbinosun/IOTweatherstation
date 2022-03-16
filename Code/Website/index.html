@@ -1,14 +1,57 @@
 <html>
     <head>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-    
+        <style type="text/css">
+            .chartBox{
+                
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: auto;
+                margin-right: auto;
+                width: 900px;
+                
+            }
+            
+        </style>
 
     </head>
     <body>
-        <canvas id="myChart" width="400" height="400"></canvas>
+        <style>
+            
+            body {
+                
+                background-image: url('https://64.media.tumblr.com/tumblr_mb88akQlJ91r6j7rho1_500.gifv');
+                background-size: cover;
+                opacity: 0.9;
+                height: 100vh;
+                padding:0;
+                margin:0;
+                
+
+            }
+            h1 {
+                color: white;
+                text-align: center;
+            }
+
+            p {
+                font-family: verdana;
+                font-size: 20px;
+                text-align: center;
+            }    
+        </style>
+        <h1>Weather Mill Station</h1>
+        <p>Indoor Temperature Chart</p>
+        
+        
+        <div class="chartBox">
+            <canvas id="myChart"></canvas>
+        </div>"
+        
         <script>
         const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart;
+        let myChart;
 
         fetch('http://localhost:8080/site/get_db.php')
             .then(response => response.json())
@@ -54,6 +97,8 @@
                     }]
                 },
                 options: {
+                    
+                    maintainAspectRatio: true,
                     Animation: false,
                     scales: {
                         y: {
