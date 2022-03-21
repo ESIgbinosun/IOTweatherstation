@@ -16,6 +16,7 @@
 
     $data = array();
     $temperature = array();
+    $outdoor = array();
     $time = array();
 
     if ($result->num_rows > 0) {
@@ -24,6 +25,7 @@
             //echo $row["time"] . " " . $row["tempVal"];
             //$data[] = $row;
             $temperature[] = $row["tempVal"];
+            $outdoor[] = $row["outdoor"];
             $time[] = $row["time"];
         }
     } else {
@@ -33,6 +35,7 @@
 
     $data["time"] = $time;
     $data["temperature"] = $temperature;
+    $data["outdoor"] = $outdoor;
    
 
     print_r(json_encode($data));

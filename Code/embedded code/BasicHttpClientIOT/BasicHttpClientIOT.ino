@@ -99,7 +99,7 @@ void loop() {
     lcd.print("'C");
 
 
-    String url = String("http://2ae3-145-109-135-199.ngrok.io/site/insert_db.php/?temperature=") + sensorValue;
+    String url = String("http://1213-145-109-148-75.ngrok.io/site/insert_db.php/?temperature=") + sensorValue + "&outdoor=" + outdoorTemp;
     Serial.println(url);
     HTTPClient client2;
     if (client2.begin(client, url)) { // HTTP

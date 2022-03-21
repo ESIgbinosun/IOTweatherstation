@@ -1,10 +1,13 @@
 <!-- <?php
 $temperature = $_GET["temperature"];
  echo "$temperature";
+ $outdoor = $_GET["outdoor"];
+ echo "$outdoor";
 ?> -->
 
 <?php 
 $temperature = $_GET["temperature"];
+$outdoor = $_GET["outdoor"];
 
 
 $servername = "localhost";
@@ -20,8 +23,9 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "INSERT INTO temperature (tempVal)
-VALUES ($temperature)";
+$sql = "INSERT INTO temperature (tempVal, outdoor)
+VALUES ($temperature, $outdoor)";
+
 
 if ($conn->query($sql) === TRUE) {
   echo "New record ";
