@@ -1,0 +1,45 @@
+# Replace the text below to customize your site
+site_name: Internet of Things Documentation Page
+site_description: Documentation for <insert student name>
+site_author: <insert student name>
+copyright: Copyright 2022 <insert student name> - Creative Commons Attribution Non Commercial
+
+site_url: https://localhost:8000/
+  
+theme:
+  name: material
+  palette:
+    # try other colors https://squidfunk.github.io/mkdocs-material/getting-started/#primary-colors
+    primary: deep
+    accent: indigo
+  font:
+    # See available fonts at https://fonts.google.com/
+    text: Open Sans
+    code: Ubuntu Mono
+  icon:
+    logo: material/school
+  favicon: images/favicon.svg
+  features:
+    - navigation.tabs
+    - navigation.instant
+
+plugins:
+  - search
+  - git-revision-date-localized:
+      fallback_to_build_date: true
+      # Read more: https://timvink.github.io/mkdocs-git-revision-date-localized-plugin/options/#enabled
+      enabled: !ENV [ENABLED_GIT_REVISION_DATE, False]
+
+markdown_extensions:
+  - extra
+  - smarty
+  - admonition
+  - codehilite:
+      guess_lang: true
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
