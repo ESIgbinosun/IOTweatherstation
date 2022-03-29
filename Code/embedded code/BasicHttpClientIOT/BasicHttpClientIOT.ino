@@ -1,4 +1,3 @@
-
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
 #include <OneWire.h>
@@ -16,6 +15,7 @@
 #include <WiFiClient.h>
 
 #define ONE_WIRE_BUS D5
+#define MOTOR 0
 
 ESP8266WiFiMulti WiFiMulti;
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -23,12 +23,19 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 //const uint8_t fingerprint[20] = {0xb4, 0x22, 0x73, 0x81, 0xc1, 0x21, 0x6b, 0x72, 0x5c, 0xcc, 0xd9, 0xc1, 0x2d, 0xfd, 0x9b, 0x90, 0x0b, 0xf8, 0xc7, 0xf8};
 signed int outdoorTemp;
+signed int cloudCover;
+signed int windSpeed;
+const int buttonPin = D7; 
+int buttonState = 0; 
+
 
 
 void setup() {
   lcd.init();
   lcd.backlight();
   sensors.begin();
+  pinMode(buttonPin, INPUT);
+  pinMode(MOTOR, OUTPUT);
   Serial.begin(115200);
   // Serial.setDebugOutput(true);
 
@@ -73,6 +80,8 @@ void loop() {
    
 
       outdoorTemp = jsonBuffer["data"]["temp_C"].as<signed int>();
+      cloudCover = jsonBuffer["data"]["cloudcover"].as<signed int>();
+      windSpeed = jsonBuffer["data"]["windspeedKmph"].as<signed int>();
       //Serial.print("Outdoor temp in Amsterdam: ");
       Serial.println(outdoorTemp);
       http.end();
@@ -85,21 +94,51 @@ void loop() {
     Serial.print("[HTTP] begin...\n");
     sensors.requestTemperatures();
     double sensorValue = sensors.getTempCByIndex(0);
-    lcd.setCursor(8, 0);
-    lcd.print(sensorValue);
-    lcd.setCursor(0, 0);
-    lcd.print("Indoor:");
-    lcd.setCursor(13, 0);
-    lcd.print("'C");
-    lcd.setCursor(9, 1);
-    lcd.print(outdoorTemp);
-    lcd.setCursor(0, 1);
-    lcd.print("outdoor:");
-    lcd.setCursor(11, 1);
-    lcd.print("'C");
+    buttonState = digitalRead(buttonPin);
 
 
-    String url = String("http://1213-145-109-148-75.ngrok.io/site/insert_db.php/?temperature=") + sensorValue + "&outdoor=" + outdoorTemp;
+    if (buttonState == HIGH) {
+        lcd.clear();
+        lcd.setCursor(12, 0);
+        lcd.print(cloudCover);
+        lcd.setCursor(0, 0);
+        lcd.print("Cloudcover:");
+        lcd.setCursor(14, 0);
+        lcd.print("%");
+        lcd.setCursor(11, 1);
+        lcd.print(windSpeed);
+        lcd.setCursor(0, 1);
+        lcd.print("Windspeed:");
+        lcd.setCursor(13, 1);
+        lcd.print("km");
+
+   
+    
+  } else {
+        lcd.clear();
+        lcd.setCursor(8, 0);
+        lcd.print(sensorValue);
+        lcd.setCursor(0, 0);
+        lcd.print("Indoor:");
+        lcd.setCursor(13, 0);
+        lcd.print("'C");
+        lcd.setCursor(9, 1);
+        lcd.print(outdoorTemp);
+        lcd.setCursor(0, 1);
+        lcd.print("outdoor:");
+        lcd.setCursor(11, 1);
+        lcd.print("'C");
+  }
+
+  if(windSpeed>10){
+    analogWrite(0, 125);
+  }else{
+    analogWrite(0, 0);
+  }
+      
+ 
+
+    String url = String("http://a2d1-145-109-135-180.ngrok.io/site/insert_db.php/?temperature=") + sensorValue + "&outdoor=" + outdoorTemp;
     Serial.println(url);
     HTTPClient client2;
     if (client2.begin(client, url)) { // HTTP
