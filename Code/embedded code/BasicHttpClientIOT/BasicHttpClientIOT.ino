@@ -15,7 +15,7 @@
 #include <WiFiClient.h>
 
 #define ONE_WIRE_BUS D5
-#define MOTOR 0
+#define MOTOR D6
 
 ESP8266WiFiMulti WiFiMulti;
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -130,11 +130,11 @@ void loop() {
         lcd.print("'C");
   }
 
-  if(windSpeed>10){
-    analogWrite(0, 125);
-  }else{
-    analogWrite(0, 0);
-  }
+  //if(windSpeed>10){
+    analogWrite(MOTOR, 125);
+ // }else{
+    //analogWrite(0, 0);
+  //}
       
  
 
