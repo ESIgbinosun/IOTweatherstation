@@ -1,6 +1,7 @@
 # Blueprint technical Documentation
 
 ## Wiring diagram 
+![Different image of wiring diagram](https://gitlab.fdmci.hva.nl/IoT/2021-2022-feb-jun/individual-project/iot-igbinos/-/blob/DevBranch/Technical%20documentation/wiring%20diagram.png)
 
 ## Bill of materials
 
