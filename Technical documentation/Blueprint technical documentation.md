@@ -11,4 +11,10 @@
 |2|162LCD        |               | LCD     | LCD Display 16*2 characters       |  1x	 | € 4,00 |  [LINK]: https://www.tinytronics.nl/shop/en/displays/lcd/lcd-display-16*2-characters-with-white-text-and-blue-backlight                                                                               |
 |3|              |               | Wemos   | ESP8266 D1 Mini Pro		       |  1x       | € 9,99 |  [LINK]: https://www.otronic.nl/a-62361236/esp8266/esp8266-d1-mini-pro-development-board-wemos/?gclid=Cj0KCQjwz7uRBhDRARIsAFqjulmBhLtjCYMU66G0RRoBpKQh2jNPKogIFRLE5b-eb9luPoIChLH3fdgaAkBTEALw_wcB    |
 
-## Architecture Overview
+## Hardware architecture Overview
+
+## UML
+
+## API documentation 
+
+## System architreture 
