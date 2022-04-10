@@ -12,9 +12,12 @@
 |3|              |               | Wemos   | ESP8266 D1 Mini Pro		       |  1x       | € 9,99 |  [LINK]: https://www.otronic.nl/a-62361236/esp8266/esp8266-d1-mini-pro-development-board-wemos/?gclid=Cj0KCQjwz7uRBhDRARIsAFqjulmBhLtjCYMU66G0RRoBpKQh2jNPKogIFRLE5b-eb9luPoIChLH3fdgaAkBTEALw_wcB    |
 
 ## Hardware architecture Overview
+![Hardware architecture Overview](IMG/IoT hardware architecture Overview.png)
 
 ## UML
+![UML](IMG/IoT software UML.png)
 
 ## API documentation 
 
 ## System architreture 
+![System architreture](IMG/IoT system architecture .png)
