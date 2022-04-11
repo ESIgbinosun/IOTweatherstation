@@ -2,10 +2,11 @@
 
 ## Wiring diagram 
 ![Wiring diagram](IMG/wiring diagram.png)
+
 ## Bill of materials
 
 
-|#| part number  | manufacturer  | name    |description                        | quantity  | cost   | url                                                                                                                                                                                                   |
+|#| Part number  | Manufacturer  | Name    | Description                       | Quantity  | Cost   | url                                                                                                                                                                                                   |
 |-|:------------:|:-------------:|:-------:|:---------------------------------:|:---------:|:------:| -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 |1|KY-001        | Keyes         | DS18B20 | Temperatuur Sensor Module DS18B20 |  1X       | € 2,99 |  [LINK]: https://www.otronic.nl/a-63016282/sensors/temperatuur-sensor-module-ds18b20-dallas-clone/?gclid=Cj0KCQjwz7uRBhDRARIsAFqjuln9ZQj2s46OsvXAT7ZA9GZl4vI5bgohDp9vesoGXoXQkQr0cAALCawaAsyKEALw_wcB |
 |2|162LCD        |               | LCD     | LCD Display 16*2 characters       |  1x	 | € 4,00 |  [LINK]: https://www.tinytronics.nl/shop/en/displays/lcd/lcd-display-16*2-characters-with-white-text-and-blue-backlight                                                                               |
@@ -19,5 +20,74 @@
 
 ## API documentation 
 
-## System architreture 
+Used API-endpoint:
+
+```
+
+Only the current weather data in the compact parameter:
+```
+GET http://api.iot.hva-robots.nl/weather/Amsterdam/compact
+```
+
+Sample response:
+```
+{
+  "success": true,
+  "data": {
+    "FeelsLikeC": "11",
+    "FeelsLikeF": "53",
+    "cloudcover": "25",
+    "humidity": "94",
+    "localObsDateTime": "2021-09-22 08:53 AM",
+    "observation_time": "06:53 AM",
+    "precipInches": "0.0",
+    "precipMM": "0.0",
+    "pressure": "1028",
+    "pressureInches": "30",
+    "temp_C": "12",
+    "temp_F": "54",
+    "uvIndex": "1",
+    "visibility": "9",
+    "visibilityMiles": "5",
+    "weatherCode": "116",
+    "weatherDesc": [
+      {
+        "value": "Partly cloudy"
+      }
+    ],
+    "weatherIconUrl": [
+      {
+        "value": ""
+      }
+    ],
+    "winddir16Point": "SW",
+    "winddirDegree": "220",
+    "windspeedKmph": "15",
+    "windspeedMiles": "9"
+  }
+}
+```
+
+The request of data is the equivalent to a regular call to create a post above:
+
+| Field | Type   | Description                                                                                                    |
+|:-----:|:------:| --------------------------------------------------------------------------------------------------------------:|
+| API   | string | sends a formated string value between interfaces, values that are measurement of outdoor sensor of the weather |
+
+The rules around publishing each request to this API must respect:
+
+- This API is only use for creative goals and not for the purpose of making money.
+- If the user is neither a writer nor an editor, the user is not allowed to create any posts in a publication.
+- Don't use verbs in urls.
+
+Possible Http code:
+
+| Http code              | Description                                                                                                                                   |
+|:----------------------:| ---------------------------------------------------------------------------------------------------------------------------------------------:|
+| 307 Temporary Redirect | redirect status response code indicates that the resource requested has been temporarily moved to the URL given by the `Location` headers.    |
+| 200 OK                 | success status response code indicates that the request has succeeded.                                                                        |
+| 400 Bad Request        | response status code indicates that the server cannot or will not process the request due to something that is perceived to be a client error |
+
+
+## System architecture 
 ![System architreture](IMG/IoT system architecture .png)
