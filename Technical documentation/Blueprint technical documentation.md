@@ -31,6 +31,7 @@ GET http://api.iot.hva-robots.nl/weather/Amsterdam/compact
 
 Sample response:
 ```
+```
 {
   "success": true,
   "data": {
@@ -88,6 +89,6 @@ Possible Http code:
 | 200 OK                 | success status response code indicates that the request has succeeded.                                                                        |
 | 400 Bad Request        | response status code indicates that the server cannot or will not process the request due to something that is perceived to be a client error |
 
-```
+
 ## System architecture 
 ![System architreture](IMG/IoT system architecture .png)
