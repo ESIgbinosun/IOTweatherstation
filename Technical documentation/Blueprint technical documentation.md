@@ -22,11 +22,12 @@
 
 Used API-endpoint:
 
-```
 
 Only the current weather data in the compact parameter:
+
 ```
 GET http://api.iot.hva-robots.nl/weather/Amsterdam/compact
+```
 ```
 
 Sample response:
