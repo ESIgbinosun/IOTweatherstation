@@ -1,6 +1,9 @@
 # Blueprint technical Documentation
 
 ## Wiring diagram 
+
+Pictorial representation of all the electrical connections in the circuit.
+
 ![Wiring diagram](IMG/wiring diagram.png)
 
 ## Bill of materials
@@ -21,6 +24,9 @@
                                                                  
 
 ## Hardware architecture Overview
+
+The representation of an engineered (or to be engineered) electronic or electromechanical hardware system, and the process and discipline for effectively implementing the design(s) for this system.
+
 ![Hardware architecture Overview](IMG/IoT hardware architecture Overview.png)
 
 ## UML
@@ -99,4 +105,7 @@ Possible Http code:
 
 
 ## System architecture 
+
+The conceptual model that defines the structure, behavior, and more views of the system.
+
 ![System architreture](IMG/IoT system architecture .png)
