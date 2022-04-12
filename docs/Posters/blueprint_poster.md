@@ -1,3 +1,3 @@
 # Blueprint Poster
 
-Add an image to the blueprint poster
+![poster](POSTER/Blueprint poster.pdf)
