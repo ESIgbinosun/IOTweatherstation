@@ -1,0 +1,193 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+        <style type="text/css">
+            .chartBox{
+                
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: auto;
+                margin-right: auto;
+                width: 900px;
+                
+            }
+            
+        </style>
+
+    </head>
+    <body>
+        <style>
+            
+            body {
+                
+                background-image: url('https://64.media.tumblr.com/tumblr_mb88akQlJ91r6j7rho1_500.gifv');
+                background-size: cover;
+                opacity: 0.9;
+                height: 100vh;
+                padding:0;
+                margin:0;
+                
+
+            }
+            h1 {
+                color: white;
+                text-align: center;
+            }
+
+            p {
+                font-family: verdana;
+                font-size: 20px;
+                text-align: center;
+            }    
+        </style>
+        <style>
+            #content {
+                position: relative;
+            }
+            #content img {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+            }
+        </style>
+        
+        <div id="content">
+            <img src="image/cloudy-day-2.svg" class="ribbon" width="110" height="110"/>
+        </div>
+        <h1>Weather Mill Station</h1>
+        <p>Indoor Temperature Chart</p>
+        
+        
+        
+        <div class="chartBox">
+            <canvas id="myChart"></canvas>
+        </div>
+        <p>Outdoor Temperature Chart</p>
+        <div class="chartBox">
+            <canvas id="myChart2"></canvas>
+        </div>
+        
+        <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const ctx2 = document.getElementById('myChart2').getContext('2d');
+        let myChart,myChart2;
+        
+
+        fetch('http://localhost:8080/site/get_db.php')
+            .then(response => response.json())
+            .then(data => createChart(data));
+
+        setInterval(function () {
+            fetch('http://localhost:8080/site/get_db.php')
+            .then(response => response.json())
+            .then(data => {
+                updateChart(myChart, data)
+                updateChart2(myChart2, data)
+
+            }); 
+              
+        }, 10000);
+
+        function updateChart(chart, data){
+            chart.data.labels= data.time;
+            chart.data.datasets[0].data = data.temperature;
+            chart.update();
+
+        }
+        function updateChart2(chart, data){
+            chart.data.labels= data.time;
+            chart.data.datasets[0].data = data.outdoor;
+            chart.update();
+
+        }
+        function createChart(data){
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    
+                    
+                    labels: data.time, 
+                    
+                    datasets: [{
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        
+                        data: data.temperature,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    
+                    maintainAspectRatio: true,
+                    Animation: false,
+                    scales: {
+                        y: {
+                            
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            myChart2 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    
+                    
+                    labels: data.time, 
+                    
+                    datasets: [{
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        
+                        data: data.outdoor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    
+                    maintainAspectRatio: true,
+                    Animation: false,
+                    scales: {
+                        y: {
+                            
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+        </script>
+
+    </body>
+</html>
+
