@@ -9,8 +9,7 @@ And registers it on the graphic.
 
 
 ## Back-end technology and database
-For the Back-end of the website and datbase. I have two php files that can insert data to database and fetch data out of the database.
-
+For the Back-end of the website and database. I have two php files that can insert data to database and fetch data out of the database.
 In this file I insert data from the wemos into the database that connect to my server. With this file I can store the specific dat that I want into 
 the table of the database and also by rows of the table:
 
