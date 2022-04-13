@@ -120,7 +120,7 @@ if (buttonState == HIGH) {
 
 ```
 
-Here in this I control the motor base on the API value of windSpeed. Depending on the vale of windSpeed the motor will activate:
+Here in this code I control the motor base on the API value of windSpeed. Depending on the vale of windSpeed the motor will activate:
 
 ```c++
  if(windSpeed>10){
