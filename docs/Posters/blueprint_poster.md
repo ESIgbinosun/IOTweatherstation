@@ -1,3 +1,3 @@
 # Blueprint Poster
 
-![poster](POSTER/Blueprint poster.pdf)
+![poster](POSTER/poster-template-horizontal-2-purrington.png)
