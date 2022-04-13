@@ -10,6 +10,7 @@ And registers it on the graphic.
 
 ## Back-end technology and database
 For the Back-end of the website and database. I have two php files that can insert data to database and fetch data out of the database.
+
 In this file I insert data from the wemos into the database that connect to my server. With this file I can store the specific dat that I want into 
 the table of the database and also by rows of the table:
 
@@ -99,6 +100,9 @@ In this file I fetch data from the database to later display on the website:
     print_r(json_encode($data));
 ?>
 ```
+Here is a picture of my database for this project:
+![database](IMGIOT/database.png)
+
 
 
 ## Front-end technology

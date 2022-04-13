@@ -12,15 +12,16 @@ For the rest I like rectangle shapes for the platform and display.
  
 ## Design
 
-- pictures of the design files
+- Pictures of the design files
   -still in progress bas said to fix my design with lasercutter sinds Lego is more like a prototype design.
 - Description of the tools used
-  - [MakerCase](https://en.makercase.com/#/)
+  [MakerCase](https://en.makercase.com/#/)
   lasercuter tool to cut wood precisely according to the design.
 
 ## Fabrication
 
-detailed description of fabrication techniques used
+Detailed description of fabrication techniques used
+
 - Wood casing for the station under platform and pole stand for the windmill. Also casing for the LCD display.
 - Lego casing for the motor and propellers.
 
