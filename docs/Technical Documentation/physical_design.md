@@ -13,6 +13,7 @@ For the rest I like rectangle shapes for the platform and display.
 ## Design
 
 - Pictures of the design files
+
   ![weathermillplatform](IMGIOT/weathermillplatform.png)
   ![windmillpole](IMGIOT/windmillpole.png)
   ![Cura bladeholder](IMGIOT/bladeholder.png)
